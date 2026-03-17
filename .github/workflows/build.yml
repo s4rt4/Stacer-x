@@ -62,7 +62,7 @@ jobs:
         uses: actions/upload-artifact@v7
         if: matrix.codename == 'jammy'
         with:
-          name: stacer-${{ github.ref_name }}.tar.gz
+          name: stacer-tarball
           path: ${{ github.workspace }}/release/stacer-*.tar.gz
 
       - name: Upload workflow artifacts
@@ -73,7 +73,6 @@ jobs:
             ${{ github.workspace }}/release/stacer_*.deb
             ${{ github.workspace }}/release/stacer-*.rpm
             ${{ github.workspace }}/release/Stacer-*.AppImage
-            ${{ github.workspace }}/release/fr.quentium.stacer_*.flatpak
 
   build-flatpak:
     name: Build Flatpak
@@ -108,7 +107,7 @@ jobs:
       - name: Build Flatpak
         uses: flatpak/flatpak-github-actions/flatpak-builder@v6
         with:
-          bundle: fr.quentium.stacer_${{ env.last_tag }}.flatpak
+          bundle: fr.quentium.stacer_${{ env.last_tag }}-${{ matrix.arch }}.flatpak
           manifest-path: flatpak/fr.quentium.stacer.yml
           cache-key: flatpak-builder-${{ github.sha }}
           arch: ${{ matrix.arch }}
@@ -142,7 +141,7 @@ jobs:
       - name: Download tarball
         uses: actions/download-artifact@v8
         with:
-          pattern: stacer-*.tar.gz
+          pattern: stacer-tarball
           path: ${{ github.workspace }}/release/
           merge-multiple: true
 
