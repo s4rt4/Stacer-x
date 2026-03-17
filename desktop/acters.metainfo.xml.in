@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2026 Quentin Lienhardt -->
 <component type="desktop-application">
-    <id>fr.quentium.stacer</id>
+    <id>fr.quentium.acters</id>
 
-    <name>Stacer</name>
-    <summary>Linux System Optimizer and Monitoring</summary>
+    <name>Acters</name>
+    <summary>Linux System Optimizer &amp; Monitoring</summary>
 
     <metadata_license>CC0-1.0</metadata_license>
     <project_license>GPL-3.0</project_license>
@@ -19,10 +19,10 @@
     <translation type="gettext">stacer</translation>
 
     <description>
-        <p>Stacer is an open source system optimizer and application monitor that helps users to manage entire system with different aspects, its an all in one system utility.</p>
+        <p>Acters is an open source system optimizer and application monitor that helps users to manage entire system with different aspects, its an all in one system utility.</p>
     </description>
 
-    <launchable type="desktop-id">fr.quentium.stacer.desktop</launchable>
+    <launchable type="desktop-id">fr.quentium.acters.desktop</launchable>
 
     <icon type="stock">stacer</icon>
 
@@ -50,79 +50,79 @@
 
     <screenshots>
         <screenshot type="default">
-            <caption>The Stacer Dashboard</caption>
+            <caption>The Acters Dashboard</caption>
             <image>https://raw.githubusercontent.com/QuentiumYT/Stacer/HEAD/screenshots/Screenshot-dashboard.png</image>
         </screenshot>
         <screenshot>
-            <caption>The Stacer Dashboard on Ubuntu</caption>
+            <caption>The Acters Dashboard on Ubuntu</caption>
             <image>https://raw.githubusercontent.com/QuentiumYT/Stacer/HEAD/screenshots/Screenshot-dashboard-ubuntu.png</image>
         </screenshot>
         <screenshot>
-            <caption>The Stacer Dashboard on WSL</caption>
+            <caption>The Acters Dashboard on WSL</caption>
             <image>https://raw.githubusercontent.com/QuentiumYT/Stacer/HEAD/screenshots/Screenshot-dashboard-wsl.png</image>
         </screenshot>
         <screenshot>
-            <caption>The Stacer Startup Apps</caption>
+            <caption>The Acters Startup Apps</caption>
             <image>https://raw.githubusercontent.com/QuentiumYT/Stacer/HEAD/screenshots/Screenshot-startup-apps.png</image>
         </screenshot>
         <screenshot>
-            <caption>The Stacer System cleaner</caption>
+            <caption>The Acters System cleaner</caption>
             <image>https://raw.githubusercontent.com/QuentiumYT/Stacer/HEAD/screenshots/Screenshot-system-cleaner.png</image>
         </screenshot>
         <screenshot>
-            <caption>The Stacer System cleaner list</caption>
+            <caption>The Acters System cleaner list</caption>
             <image>https://raw.githubusercontent.com/QuentiumYT/Stacer/HEAD/screenshots/Screenshot-system-cleaner-list.png</image>
         </screenshot>
         <screenshot>
-            <caption>The Stacer Search</caption>
+            <caption>The Acters Search</caption>
             <image>https://raw.githubusercontent.com/QuentiumYT/Stacer/HEAD/screenshots/Screenshot-search.png</image>
         </screenshot>
         <screenshot>
-            <caption>The Stacer Services</caption>
+            <caption>The Acters Services</caption>
             <image>https://raw.githubusercontent.com/QuentiumYT/Stacer/HEAD/screenshots/Screenshot-services.png</image>
         </screenshot>
         <screenshot>
-            <caption>The Stacer Processes</caption>
+            <caption>The Acters Processes</caption>
             <image>https://raw.githubusercontent.com/QuentiumYT/Stacer/HEAD/screenshots/Screenshot-processes.png</image>
         </screenshot>
         <screenshot>
-            <caption>The Stacer Uninstaller</caption>
+            <caption>The Acters Uninstaller</caption>
             <image>https://raw.githubusercontent.com/QuentiumYT/Stacer/HEAD/screenshots/Screenshot-uninstaller.png</image>
         </screenshot>
         <screenshot>
-            <caption>The Stacer Resources</caption>
+            <caption>The Acters Resources</caption>
             <image>https://raw.githubusercontent.com/QuentiumYT/Stacer/HEAD/screenshots/Screenshot-resources.png</image>
         </screenshot>
         <screenshot>
-            <caption>The Stacer Resources usage</caption>
+            <caption>The Acters Resources usage</caption>
             <image>https://raw.githubusercontent.com/QuentiumYT/Stacer/HEAD/screenshots/Screenshot-resources-usage.png</image>
         </screenshot>
         <screenshot>
-            <caption>The Stacer Resources system</caption>
+            <caption>The Acters Resources system</caption>
             <image>https://raw.githubusercontent.com/QuentiumYT/Stacer/HEAD/screenshots/Screenshot-resources-system.png</image>
         </screenshot>
         <screenshot>
-            <caption>The Stacer Helpers</caption>
+            <caption>The Acters Helpers</caption>
             <image>https://raw.githubusercontent.com/QuentiumYT/Stacer/HEAD/screenshots/Screenshot-helpers.png</image>
         </screenshot>
         <screenshot>
-            <caption>The Stacer APT Repository Manager</caption>
+            <caption>The Acters APT Repository Manager</caption>
             <image>https://raw.githubusercontent.com/QuentiumYT/Stacer/HEAD/screenshots/Screenshot-apt-repository-manager.png</image>
         </screenshot>
         <screenshot>
-            <caption>The Stacer Gnome Settings</caption>
+            <caption>The Acters Gnome Settings</caption>
             <image>https://raw.githubusercontent.com/QuentiumYT/Stacer/HEAD/screenshots/Screenshot-gnome-settings.png</image>
         </screenshot>
         <screenshot>
-            <caption>The Stacer Gnome Settings appearance</caption>
+            <caption>The Acters Gnome Settings appearance</caption>
             <image>https://raw.githubusercontent.com/QuentiumYT/Stacer/HEAD/screenshots/Screenshot-gnome-settings-appearance.png</image>
         </screenshot>
         <screenshot>
-            <caption>The Stacer Settings</caption>
+            <caption>The Acters Settings</caption>
             <image>https://raw.githubusercontent.com/QuentiumYT/Stacer/HEAD/screenshots/Screenshot-settings.png</image>
         </screenshot>
         <screenshot>
-            <caption>The Stacer Settings feedback</caption>
+            <caption>The Acters Settings feedback</caption>
             <image>https://raw.githubusercontent.com/QuentiumYT/Stacer/HEAD/screenshots/Screenshot-settings-feedback.png</image>
         </screenshot>
     </screenshots>
@@ -134,7 +134,7 @@
     <releases>
         <release version="@Stacer_VERSION_MAJOR@.@Stacer_VERSION_MINOR@.@Stacer_VERSION_PATCH@" date="@TODAY_ISO_8601@">
             <description>
-                <p>Latest stable release of Stacer with performance improvements and bug fixes.</p>
+                <p>Latest stable release of Acters with performance improvements and bug fixes.</p>
             </description>
         </release>
     </releases>

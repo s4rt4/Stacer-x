@@ -40,6 +40,8 @@ class SettingsPage : public QWidget
   private:
     AppManager *apm;
 
+    QList<QString> mListStartupPages;
+
     QString mStartupAppPath;
 
     SettingManager *mSettingManager;

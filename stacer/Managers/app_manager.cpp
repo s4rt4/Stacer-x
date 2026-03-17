@@ -31,6 +31,12 @@ AppManager::AppManager()
         translationPath = applicationTranslationPath;
     }
 
+    // Flatpak translation path (highest priority for sandboxed build)
+    QString flatpakTranslationPath = "/app/share/stacer/translations";
+    if (QDir(flatpakTranslationPath).exists()) {
+        translationPath = flatpakTranslationPath;
+    }
+
     // Fallback to local translations path if global/application path does not exist
     QString folderTranslationPath = qApp->applicationDirPath() + "/translations";
     if (QDir(folderTranslationPath).exists()) {

@@ -7,8 +7,8 @@ on:
       - "v*"
 
 jobs:
-  build:
-    name: Build App
+  build-all:
+    name: Build All
     strategy:
       matrix:
         os: [ubuntu-24.04, ubuntu-24.04-arm, ubuntu-22.04, ubuntu-22.04-arm]
@@ -33,9 +33,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-          fetch-tags: true
 
       - name: Update package repositories
         run: sudo apt-get update
@@ -69,25 +66,60 @@ jobs:
             ${{ github.workspace }}/release/stacer_*.deb
             ${{ github.workspace }}/release/stacer-*.rpm
             ${{ github.workspace }}/release/Stacer-*.AppImage
+            ${{ github.workspace }}/release/fr.quentium.stacer_*.flatpak
 
-      - name: Update debian files
-        run: |
-          sed -i "s/^Architecture:\s\+.*$/Architecture: any/g" ${{ github.workspace }}/debian/control
+  build-flatpak:
+    name: Build Flatpak
+    strategy:
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+        include:
+          - os: ubuntu-24.04
+            arch: x86_64
+          - os: ubuntu-24.04-arm
+            arch: aarch64
+    runs-on: ${{ matrix.os }}
+    container:
+      image: ghcr.io/flathub-infra/flatpak-github-actions:gnome-48
+      options: --privileged
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          fetch-tags: true
 
-      - name: Display debian folder
+      - name: Mark repo as safe
         run: |
-          echo "Debian folder content:"
-          ls -la ${{ github.workspace }}/debian/
-          echo "Release folder content:"
-          ls -la ${{ github.workspace }}/release/
-          echo "Control file content:"
-          cat ${{ github.workspace }}/debian/control
-          echo "Changelog file content:"
-          cat ${{ github.workspace }}/debian/changelog
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Get last tag
+        run: |
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "HEAD")
+          echo "last_tag=$LAST_TAG" >> $GITHUB_ENV
+
+      - name: Build Flatpak
+        uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+        with:
+          bundle: fr.quentium.stacer_${{ env.last_tag }}.flatpak
+          manifest-path: flatpak/fr.quentium.stacer.yml
+          cache-key: flatpak-builder-${{ github.sha }}
+          arch: ${{ matrix.arch }}
+
+  publish:
+    name: Publish Release
+    needs: [build-all, build-flatpak]
+    if: github.event_name != 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          fetch-tags: true
 
       - name: Get changelog
         id: changelog
-        if: github.event_name != 'workflow_dispatch' && matrix.codename == 'jammy'
         run: |
           CHANGELOG=$(awk '/^stacer \(/ {if (NR!=1) exit} /^[ ]*\*/ {print}' ${{ github.workspace }}/debian/changelog)
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
@@ -96,14 +128,26 @@ jobs:
 
       - name: Get previous tag
         id: previous_tag
-        if: github.event_name != 'workflow_dispatch' && matrix.codename == 'jammy'
         run: |
           PREVIOUS_TAG=$(git tag --sort=-v:refname | grep -v "^${GITHUB_REF_NAME}$" | head -n 1)
           echo "previous_tag=$PREVIOUS_TAG" >> $GITHUB_OUTPUT
 
+      - name: Download build artifacts
+        uses: actions/download-artifact@v8
+        with:
+          pattern: stacer-jammy*
+          path: ${{ github.workspace }}/release/
+          merge-multiple: true
+
+      - name: Download Flatpak artifacts
+        uses: actions/download-artifact@v8
+        with:
+          pattern: flatpak-*
+          path: ${{ github.workspace }}/release/
+          merge-multiple: true
+
       - name: Publish release
         uses: softprops/action-gh-release@v2
-        if: github.event_name != 'workflow_dispatch' && matrix.codename == 'jammy'
         with:
           tag_name: ${{ github.ref_name }}
           name: ${{ github.ref_name }}
@@ -119,10 +163,10 @@ jobs:
             ${{ github.workspace }}/release/stacer_*.deb
             ${{ github.workspace }}/release/stacer-*.rpm
             ${{ github.workspace }}/release/Stacer-*.AppImage
+            ${{ github.workspace }}/release/fr.quentium.stacer-*.flatpak
 
       - name: Publish PPA package
         uses: yuezk/publish-ppa-package@main
-        if: github.event_name != 'workflow_dispatch' && matrix.codename == 'jammy'
         with:
           tarball: ${{ github.workspace }}/release/stacer-*.tar.gz
           debian_dir: ${{ github.workspace }}/debian/

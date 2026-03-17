@@ -80,8 +80,18 @@ void SettingsPage::init()
     ui->checkAppQuitDontAsk->setChecked(mSettingManager->getAppQuitDialogDontAsk());
 
     // load pages
-    ui->cmbStartPage->addItems({ tr("Dashboard"), tr("Startup Apps"), tr("System Cleaner"), tr("Search"),
-                                 tr("Services"), tr("Processes"), tr("Helpers"), tr("Uninstaller"), tr("Resources") });
+    mListStartupPages = {
+        tr("Dashboard"), tr("Startup Apps"), tr("System Cleaner"), tr("Search"), tr("Services"),
+        tr("Processes"), tr("Uninstaller"), tr("Resources"), tr("Helpers")
+    };
+
+    if (QFile::exists("/.flatpak-info")) {
+        mListStartupPages.removeOne(tr("Services"));
+        mListStartupPages.removeOne(tr("Processes"));
+        mListStartupPages.removeOne(tr("Uninstaller"));
+    }
+
+    ui->cmbStartPage->addItems(mListStartupPages);
 
     ui->cmbStartPage->setCurrentText(mSettingManager->getStartPage());
 

@@ -5,6 +5,7 @@ build/
 release/
 translations/*.qm
 
+# rpm package
 rpm/BUILD/
 rpm/BUILDROOT/
 rpm/*RPMS/
@@ -12,4 +13,10 @@ rpm/SOURCES/
 debug*.list
 elfbins.list
 
+# appimage
 *.AppImage
+
+# flatpak
+.flatpak-builder
+repo/
+*.flatpak

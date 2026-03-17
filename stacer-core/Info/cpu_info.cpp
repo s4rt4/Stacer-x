@@ -24,7 +24,7 @@ int CpuInfo::getCpuPhysicalCoreCount() const
                     QStringList fields = line.split(": ");
                     if (fields.size() > 1)
                         core = fields[1].toInt();
-                    // We assume core id appears after physical id.
+                    // We assume core id appears after physical id
                     physicalCoreSet.insert(qMakePair(physical, core));
                 }
             }
@@ -115,11 +115,11 @@ QList<int> CpuInfo::getCpuPercents() const
 
     if (!times.isEmpty()) {
         /*  user nice system idle iowait  irq  softirq steal guest guest_nice
-           cpu  4705 356  584    3699   23    23     0       0     0      0
-            .
-           cpuN 4705 356  584    3699   23    23     0       0     0      0
+            cpu  4705 356  584    3699   23    23     0       0     0      0
+            ...
+            cpuN 4705 356  584    3699   23    23     0       0     0      0
 
-             The meanings of the columns are as follows, from left to right:
+            The meanings of the columns are as follows, from left to right:
                 - user: normal processes executing in user mode
                 - nice: niced processes executing in user mode
                 - system: processes executing in kernel mode
@@ -130,7 +130,7 @@ QList<int> CpuInfo::getCpuPercents() const
                 - steal: involuntary wait
                 - guest: running a normal guest
                 - guest_nice: running a niced guest
-           */
+        */
 
         QRegularExpression sep("\\s+");
         int count = CpuInfo::getCpuCoreCount() + 1;
