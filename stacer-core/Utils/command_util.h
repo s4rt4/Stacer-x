@@ -11,6 +11,7 @@ class STACERCORESHARED_EXPORT CommandUtil
     static QString sudoExec(const QString &cmd, QStringList args = QStringList(), QByteArray data = QByteArray());
     static QString exec(const QString &cmd, QStringList args = QStringList(), QByteArray data = QByteArray(), bool checkExitCode = false);
     static bool isExecutable(const QString &cmd);
+    static bool isAptRpm();
 };
 
 #endif // COMMAND_UTIL_H

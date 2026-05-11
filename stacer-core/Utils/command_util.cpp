@@ -50,6 +50,24 @@ QString CommandUtil::exec(const QString &cmd, QStringList args, QByteArray data,
     return stdOut.readAll().trimmed();
 }
 
+bool CommandUtil::isAptRpm()
+{
+    if (!isExecutable("apt-get") || !isExecutable("rpm")) {
+        return false;
+    }
+
+    if (isExecutable("apt-repo")) {
+        return true;
+    }
+
+    try {
+        QString version = exec("apt-get", { "--version" });
+        return version.contains("rpm interface", Qt::CaseInsensitive);
+    } catch (const QString &) {
+        return false;
+    }
+}
+
 bool CommandUtil::isExecutable(const QString &cmd)
 {
     return !QStandardPaths::findExecutable(cmd).isEmpty();
