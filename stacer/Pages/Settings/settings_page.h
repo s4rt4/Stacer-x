@@ -24,7 +24,7 @@ class SettingsPage : public QWidget
     void init();
 
     void cmbLanguagesChanged(const int &index);
-    // void cmbThemesChanged(const int &index);
+    void cmbThemesChanged(const int &index);
     void cmbDiskChanged(const int &index);
     void cmbStartPageChanged(const int &index);
     void on_checkAutostart_clicked(bool checked);

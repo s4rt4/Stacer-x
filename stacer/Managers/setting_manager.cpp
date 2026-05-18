@@ -38,7 +38,7 @@ void SettingManager::setThemeName(const QString &value)
 
 QString SettingManager::getThemeName() const
 {
-    return "default"; // mSettings->value(SettingKeys::ThemeName, "default").toString();
+    return mSettings->value(SettingKeys::ThemeName, "default").toString();
 }
 
 void SettingManager::setDiskName(const QString &value)

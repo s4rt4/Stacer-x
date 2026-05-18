@@ -23,8 +23,8 @@ class AppManager
     QMap<QString, QString> getLanguageList() const;
     void loadLanguageList();
 
-    // QMap<QString, QString> getThemeList() const;
-    // void loadThemeList();
+    QMap<QString, QString> getThemeList() const;
+    void loadThemeList();
 
     void updateStylesheet();
     QString getStylesheetFileContent() const;
@@ -44,7 +44,7 @@ class AppManager
     QSettings *mStyleValues;
 
     QMap<QString, QString> mLanguageList;
-    // QMap<QString, QString> mThemeList;
+    QMap<QString, QString> mThemeList;
     QString mStylesheetFileContent;
 
     SettingManager *mSettingManager;

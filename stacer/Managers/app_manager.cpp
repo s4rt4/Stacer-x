@@ -21,7 +21,7 @@ AppManager::AppManager()
 
     loadLanguageList();
 
-    // loadThemeList();
+    loadThemeList();
 
     // Load from global qt translations path
     QString translationPath = QLibraryInfo::path(QLibraryInfo::TranslationsPath);
@@ -62,12 +62,11 @@ QSettings *AppManager::getStyleValues() const
 
 void AppManager::loadLanguageList()
 {
-    QByteArray lanuagesJson = FileUtil::readStringFromFile(":/static/languages.json").toUtf8();
-    QJsonArray lanuages = QJsonDocument::fromJson(lanuagesJson).array();
+    QByteArray languagesJson = FileUtil::readStringFromFile(":/static/languages.json").toUtf8();
+    QJsonArray languages = QJsonDocument::fromJson(languagesJson).array();
 
-    for (int i = 0; i < lanuages.count(); ++i) {
-
-        QJsonObject ob = lanuages.at(i).toObject();
+    for (int i = 0; i < languages.count(); ++i) {
+        QJsonObject ob = languages.at(i).toObject();
 
         mLanguageList.insert(ob["value"].toString(), ob["text"].toString());
     }
@@ -78,23 +77,22 @@ QMap<QString, QString> AppManager::getLanguageList() const
     return mLanguageList;
 }
 
-// void AppManager::loadThemeList()
-// {
-//     QByteArray themesJson = FileUtil::readStringFromFile(":/static/themes.json").toUtf8();
-//     QJsonArray themes = QJsonDocument::fromJson(themesJson).array();
+void AppManager::loadThemeList()
+{
+    QByteArray themesJson = FileUtil::readStringFromFile(":/static/themes.json").toUtf8();
+    QJsonArray themes = QJsonDocument::fromJson(themesJson).array();
 
-//     for (int i = 0; i < themes.count(); ++i) {
+    for (int i = 0; i < themes.count(); ++i) {
+        QJsonObject ob = themes.at(i).toObject();
 
-//         QJsonObject ob = themes.at(i).toObject();
+        mThemeList.insert(ob["value"].toString(), ob["text"].toString());
+    }
+}
 
-//         mThemeList.insert(ob["value"].toString(), ob["text"].toString());
-//     }
-// }
-
-// QMap<QString, QString> AppManager::getThemeList() const
-// {
-//     return mThemeList;
-// }
+QMap<QString, QString> AppManager::getThemeList() const
+{
+    return mThemeList;
+}
 
 void AppManager::updateStylesheet()
 {
