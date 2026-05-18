@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    QFontDatabase::addApplicationFont(":/static/font/Ubuntu-R.ttf");
+    QFontDatabase::addApplicationFont(":/static/font/Rubik-Regular.ttf");
 
     QPixmap pixSplash(":/static/splashscreen.png");
 

@@ -207,7 +207,7 @@
           </property>
           <property name="font">
            <font>
-            <family>Ubuntu</family>
+            <family>Rubik</family>
            </font>
           </property>
           <property name="cursor">
@@ -250,7 +250,7 @@
           </property>
           <property name="font">
            <font>
-            <family>Ubuntu</family>
+            <family>Rubik</family>
            </font>
           </property>
           <property name="cursor">
@@ -319,7 +319,7 @@
           </property>
           <property name="font">
            <font>
-            <family>Ubuntu</family>
+            <family>Rubik</family>
            </font>
           </property>
           <property name="cursor">
@@ -352,7 +352,7 @@
           </property>
           <property name="font">
            <font>
-            <family>Ubuntu</family>
+            <family>Rubik</family>
            </font>
           </property>
           <property name="cursor">
@@ -400,7 +400,7 @@
        <widget class="QLabel" name="lblAptSourceTitle">
         <property name="font">
          <font>
-          <family>Ubuntu</family>
+          <family>Rubik</family>
           <pointsize>11</pointsize>
           <italic>false</italic>
          </font>
