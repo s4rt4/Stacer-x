@@ -270,7 +270,7 @@
           </property>
           <property name="icon">
            <iconset resource="../../static.qrc">
-            <normaloff>:/static/themes/default/img/trash.png</normaloff>:/static/themes/default/img/trash.png</iconset>
+            <normaloff>:/static/themes/default/img/delete.png</normaloff>:/static/themes/default/img/delete.png</iconset>
           </property>
           <property name="iconSize">
            <size>

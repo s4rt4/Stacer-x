@@ -55,9 +55,10 @@ void CircleBar::init()
     ui->layoutCircleBar->insertWidget(1, mChartView);
 
     connect(SignalMapper::ins(), &SignalMapper::sigChangedAppTheme, [this] {
-        QSettings *styleValues = AppManager::ins()->getStyleValues();
-        mChartView->setBackgroundBrush(QColor(styleValues->value("@circleChartBackgroundColor").toString()));
-        mSeries->slices().last()->setColor(styleValues->value("@pageContent").toString()); // trail color
+        QString homeChartBackgroundColor = AppManager::ins()->getStyleValues()->value("@homeChartBackground").toString();
+        QString trailColor = AppManager::ins()->getStyleValues()->value("@pageContent").toString();
+        mChartView->setBackgroundBrush(QColor(homeChartBackgroundColor));
+        mSeries->slices().last()->setColor(QColor(trailColor));
     });
 }
 

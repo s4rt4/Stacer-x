@@ -101,7 +101,7 @@ void AppManager::updateStylesheet()
 
     mStylesheetFileContent = FileUtil::readStringFromFile(QString("%1/style.qss").arg(appThemePath));
 
-    // set values example: @color01 => #fff
+    // set values example: @globalBackground => #212f3c
     for (const QString &key : mStyleValues->allKeys()) {
         mStylesheetFileContent.replace(key, mStyleValues->value(key).toString());
     }

@@ -58,9 +58,9 @@ void HistoryChart::init()
 
     // theme changed
     connect(SignalMapper::ins(), &SignalMapper::sigChangedAppTheme, [this] {
-        QString chartLabelColor = AppManager::ins()->getStyleValues()->value("@chartLabelColor").toString();
-        QString chartGridColor = AppManager::ins()->getStyleValues()->value("@chartGridColor").toString();
-        QString historyChartBackground = AppManager::ins()->getStyleValues()->value("@historyChartBackgroundColor").toString();
+        QString chartLabelColor = AppManager::ins()->getStyleValues()->value("@chartLabel").toString();
+        QString chartGridColor = AppManager::ins()->getStyleValues()->value("@chartGrid").toString();
+        QString historyChartBackgroundColor = AppManager::ins()->getStyleValues()->value("@historyChartBackground").toString();
 
         mChart->axes(Qt::Horizontal).back()->setLabelsColor(chartLabelColor);
         mChart->axes(Qt::Horizontal).back()->setGridLineColor(chartGridColor);
@@ -68,7 +68,7 @@ void HistoryChart::init()
         mChart->axes(Qt::Vertical).back()->setLabelsColor(chartLabelColor);
         mChart->axes(Qt::Vertical).back()->setGridLineColor(chartGridColor);
 
-        mChart->setBackgroundBrush(QColor(historyChartBackground));
+        mChart->setBackgroundBrush(QColor(historyChartBackgroundColor));
         mChart->legend()->setLabelColor(chartLabelColor);
     });
 }

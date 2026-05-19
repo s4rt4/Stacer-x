@@ -89,7 +89,7 @@ void SearchPage::loadTableRowMenu()
     actionOpenFolder->setData("open-folder");
     mTableRowMenu.addAction(actionOpenFolder);
 
-    QAction *actionMoveTrash = new QAction(QIcon(":/static/themes/common/img/trash_2.png"), tr("Move Trash"));
+    QAction *actionMoveTrash = new QAction(QIcon(":/static/themes/common/img/trash.png"), tr("Move Trash"));
     actionMoveTrash->setData("move-trash");
     mTableRowMenu.addAction(actionMoveTrash);
 

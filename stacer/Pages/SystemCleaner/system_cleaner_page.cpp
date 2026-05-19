@@ -38,7 +38,7 @@ void SystemCleanerPage::init()
     connect(SignalMapper::ins(), &SignalMapper::sigChangedAppTheme, [this] {
         QString themeName = SettingManager::ins()->getThemeName();
 
-        mLoadingMovie = new QMovie(QString(":/static/themes/%1/img/scanLoading.gif").arg(themeName), {}, this);
+        mLoadingMovie = new QMovie(QString(":/static/themes/%1/img/scanning.gif").arg(themeName), {}, this);
         ui->lblLoadingScanner->setMovie(mLoadingMovie);
         mLoadingMovie->start();
         ui->lblLoadingScanner->hide();

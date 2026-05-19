@@ -95,6 +95,7 @@ void ResourcesPage::initDiskPieChart()
     mChartDiskPie->setMargins(QMargins(20, 10, 10, 10));
 
     gridWidgetDiskPie = new QWidget(this);
+    Utilities::addDropShadow(gridWidgetDiskPie, 40);
     gridLayoutDiskPie = new QGridLayout(gridWidgetDiskPie);
     gridWidgetDiskPie->setLayout(gridLayoutDiskPie);
     gridLayoutDiskPie->setContentsMargins(0, 0, 0, 0);
@@ -172,16 +173,16 @@ void ResourcesPage::initDiskPieChart()
 
     // theme changed
     connect(SignalMapper::ins(), &SignalMapper::sigChangedAppTheme, [this] {
-        QString chartLabelColor = AppManager::ins()->getStyleValues()->value("@chartLabelColor").toString();
-        QString chartGridColor = AppManager::ins()->getStyleValues()->value("@chartGridColor").toString();
-        QString historyChartBackground = AppManager::ins()->getStyleValues()->value("@historyChartBackgroundColor").toString();
+        QString chartLabelColor = AppManager::ins()->getStyleValues()->value("@chartLabel").toString();
+        QString chartGridColor = AppManager::ins()->getStyleValues()->value("@chartGrid").toString();
+        QString historyChartBackgroundColor = AppManager::ins()->getStyleValues()->value("@historyChartBackground").toString();
 
         for (int i = 0; i < mDiskPieSeries->count(); ++i) {
             mDiskPieSeries->slices().at(i)->setLabelBrush(QColor(chartGridColor));
         }
 
-        mChartDiskPie->setBackgroundBrush(QColor(historyChartBackground));
-        mChartDiskPie->legend()->setLabelColor(chartLabelColor);
+        mChartDiskPie->setBackgroundBrush(QColor(historyChartBackgroundColor));
+        mChartDiskPie->legend()->setLabelColor(QColor(chartLabelColor));
         mChartDiskPie->setTitleBrush(QColor(chartGridColor));
     });
 }
