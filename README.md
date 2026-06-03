@@ -170,8 +170,7 @@ Run: `flatpak run fr.quentium.acters`
     libqt6charts6-dev \
     libqt6svg6-dev \
     qt6-wayland-dev \
-    libglx-dev \
-    libgl1-mesa-dev \
+    libgl-dev \
     libxkbcommon-dev \
     libvulkan-dev
    ```
