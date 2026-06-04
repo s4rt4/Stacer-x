@@ -179,7 +179,7 @@ jobs:
             ${{ github.workspace }}/release/fr.quentium.stacer_*.flatpak
 
       - name: Publish PPA package
-        uses: yuezk/publish-ppa-package@main
+        uses: Quentium-Forks/publish-ppa-package@main
         with:
           tarball: ${{ github.workspace }}/release/stacer-*.tar.gz
           debian_dir: ${{ github.workspace }}/debian/
@@ -188,6 +188,6 @@ jobs:
           deb_fullname: "Quentin Lienhardt"
           gpg_private_key: ${{ secrets.PPA_GPG_PRIVATE_KEY }}
           gpg_passphrase: ${{ secrets.PPA_GPG_PASSPHRASE }}
-          series: "noble jammy"
+          series: "jammy noble resolute"
           new_version_template: "{VERSION}-{REVISION}+{SERIES}"
           keep_changelog: true
