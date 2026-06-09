@@ -32,7 +32,7 @@ add_definitions(-DQT_DEPRECATED_WARNINGS)
 add_subdirectory(stacer-core)
 add_subdirectory(stacer)
 
-string(TIMESTAMP TODAY_ISO_8601 "%Y-%m-%d")
+string(TIMESTAMP TODAY_ISO_8601 "%Y-%m-%d" UTC)
 
 configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/desktop/stacer.metainfo.xml.in"
