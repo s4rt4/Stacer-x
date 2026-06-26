@@ -31,6 +31,7 @@ add_definitions(-DQT_DEPRECATED_WARNINGS)
 # Subprojects
 add_subdirectory(stacer-core)
 add_subdirectory(stacer)
+add_subdirectory(stacer-qml)
 
 string(TIMESTAMP TODAY_ISO_8601 "%Y-%m-%d" UTC)
 

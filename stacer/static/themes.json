@@ -1,4 +1,5 @@
 [
+	{"value" : "pc-manager", "text": "PC Manager"},
 	{"value" : "default", "text": "Default"},
 	{"value" : "light", "text": "Light"}
 ]

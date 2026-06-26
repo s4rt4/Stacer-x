@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stacer Reborn — UI Mockup (PC Manager style)</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.31.0/tabler-icons.min.css">
+<style>
+  /* ============================================================
+     DESIGN TOKENS — sumber kebenaran warna.
+     Token ini HARUS sama dengan ui-guideline-stacer.md §Color tokens
+     dan diport ke QML singleton Theme.qml (lihat plan-stacer.md §4).
+     ============================================================ */
+  :root {
+    --bg:          #1c1d27;
+    --sidebar:     #191a22;
+    --card:        #2a2c39;
+    --card-hover:  #313342;
+    --accent:      #5cc4ef;
+    --accent-text: #0c3a50;
+    --accent-soft: #6fcdf2;
+    --text:        #f0f1f4;
+    --text-dim:    #9a9ca8;
+    --border:      rgba(255,255,255,0.06);
+    --warn:        #f0c060;
+
+    --radius-window: 12px;
+    --radius-card:   10px;
+    --radius-btn:    8px;
+
+    --font: "Segoe UI Variable", "Inter", system-ui, -apple-system, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background: #0f1016;            /* backdrop di luar window (mock desktop) */
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+  }
+
+  /* ---------- Window chrome ---------- */
+  .window {
+    width: 880px;
+    max-width: 100%;
+    background: var(--bg);
+    border-radius: var(--radius-window);
+    overflow: hidden;
+    border: 0.5px solid var(--border);
+  }
+  .titlebar {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+    background: var(--sidebar);
+  }
+  .titlebar .app { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; }
+  .titlebar .app i { font-size: 18px; color: var(--accent-soft); }
+  .win-ctrls { display: flex; gap: 18px; color: var(--text-dim); }
+  .win-ctrls i { font-size: 16px; cursor: default; }
+
+  .body { display: flex; }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar {
+    width: 76px;
+    background: var(--sidebar);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 8px 14px;
+  }
+  .nav-group { display: flex; flex-direction: column; gap: 4px; }
+  .nav {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    padding: 10px 4px;
+    border-radius: 9px;
+    color: var(--text-dim);
+    font-size: 11px;
+    cursor: pointer;
+    transition: background .12s ease;   /* di QML: Behavior on color { ColorAnimation } */
+  }
+  .nav i { font-size: 19px; }
+  .nav:hover { background: var(--card-hover); }
+  .nav.active { background: var(--card); color: var(--accent-soft); }   /* state aktif (QML states) */
+
+  /* ---------- Content ---------- */
+  .content { flex: 1; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+
+  .card { background: var(--card); border-radius: var(--radius-card); padding: 16px; }
+
+  /* hero */
+  .hero { display: flex; align-items: center; gap: 14px; }
+  .hero .thumb {
+    width: 40px; height: 40px; border-radius: 9px; background: var(--card-hover);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .hero .thumb i { font-size: 21px; color: var(--warn); }
+  .hero h3 { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+  .hero p  { font-size: 12px; color: var(--text-dim); }
+  .link { color: var(--accent-soft); }
+
+  /* boost */
+  .boost-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; }
+  .boost-head .title { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; }
+  .boost-head .title i { font-size: 17px; color: var(--accent-soft); }
+  .boost-sub { font-size: 12px; color: var(--text-dim); margin-bottom: 14px; }
+  .metrics { display: flex; gap: 32px; margin-bottom: 14px; }
+  .metric { display: flex; align-items: center; gap: 10px; }
+  .metric .bar { width: 4px; height: 32px; border-radius: 2px; background: var(--accent); }
+  .metric .num { font-size: 18px; font-weight: 500; }
+  .metric .lbl { font-size: 11px; color: var(--text-dim); }
+  .btn-accent {
+    background: var(--accent); color: var(--accent-text);
+    text-align: center; padding: 11px; border-radius: var(--radius-btn);
+    font-size: 13px; font-weight: 500; cursor: pointer;
+  }
+  .btn-accent:hover { background: var(--accent-soft); }
+
+  /* grid tiles */
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .tile { background: var(--card); border-radius: var(--radius-card); padding: 15px; }
+  .tile:hover { background: var(--card-hover); }
+  .tile-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+  .tile-head .name { font-size: 13px; font-weight: 500; }
+  .tile-head i { font-size: 17px; color: var(--text-dim); }
+  .tile .lbl { font-size: 11px; color: var(--text-dim); margin-bottom: 2px; }
+  .tile .val { font-size: 13px; }
+
+  @media (max-width: 620px) {
+    .grid { grid-template-columns: 1fr; }
+    .metrics { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+  <div class="window" role="img" aria-label="Mockup Stacer bergaya Microsoft PC Manager: sidebar gelap di kiri, kartu rounded, aksen cyan.">
+
+    <!-- Title bar -->
+    <div class="titlebar">
+      <div class="app"><i class="ti ti-bolt"></i><span>Stacer</span></div>
+      <div class="win-ctrls">
+        <i class="ti ti-minus"></i>
+        <i class="ti ti-square"></i>
+        <i class="ti ti-x"></i>
+      </div>
+    </div>
+
+    <div class="body">
+      <!-- Sidebar -->
+      <nav class="sidebar">
+        <div class="nav-group">
+          <div class="nav active"><i class="ti ti-home"></i>Dashboard</div>
+          <div class="nav"><i class="ti ti-eraser"></i>Cleaner</div>
+          <div class="nav"><i class="ti ti-server-2"></i>Services</div>
+          <div class="nav"><i class="ti ti-list-details"></i>Processes</div>
+          <div class="nav"><i class="ti ti-player-play"></i>Startup</div>
+          <div class="nav"><i class="ti ti-chart-line"></i>Resources</div>
+        </div>
+        <div class="nav-group">
+          <div class="nav"><i class="ti ti-settings"></i>Settings</div>
+          <div class="nav"><i class="ti ti-info-circle"></i>About</div>
+        </div>
+      </nav>
+
+      <!-- Content -->
+      <main class="content">
+
+        <!-- Hero -->
+        <section class="card hero">
+          <div class="thumb"><i class="ti ti-bulb"></i></div>
+          <div>
+            <h3>Keep your system lean</h3>
+            <p>Free up resources and tidy your startup. <span class="link">Learn more ›</span></p>
+          </div>
+        </section>
+
+        <!-- System boost -->
+        <section class="card">
+          <div class="boost-head">
+            <span class="title"><i class="ti ti-rocket"></i>System boost</span>
+            <span class="link" style="font-size:12px;">Smart boost</span>
+          </div>
+          <p class="boost-sub">Free up your system resources</p>
+          <div class="metrics">
+            <div class="metric">
+              <span class="bar"></span>
+              <div><div class="num">82%</div><div class="lbl">Memory usage</div></div>
+            </div>
+            <div class="metric">
+              <span class="bar"></span>
+              <div><div class="num">1.2 GB</div><div class="lbl">Cache &amp; logs</div></div>
+            </div>
+          </div>
+          <div class="btn-accent">Boost</div>
+        </section>
+
+        <!-- Feature grid 2x2 -->
+        <section class="grid">
+          <div class="tile">
+            <div class="tile-head"><span class="name">Health check</span><i class="ti ti-activity-heartbeat"></i></div>
+            <div class="lbl">Last scan</div><div class="val">2 days ago</div>
+          </div>
+          <div class="tile">
+            <div class="tile-head"><span class="name">Processes</span><i class="ti ti-list-details"></i></div>
+            <div class="lbl">Running</div><div class="val">142 active</div>
+          </div>
+          <div class="tile">
+            <div class="tile-head"><span class="name">Deep cleanup</span><i class="ti ti-eraser"></i></div>
+            <div class="lbl">Root (/)</div><div class="val">23.7 / 59.3 GB</div>
+          </div>
+          <div class="tile">
+            <div class="tile-head"><span class="name">Startup</span><i class="ti ti-power"></i></div>
+            <div class="lbl">Boot time</div><div class="val">4.1 s</div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+</body>
+</html>

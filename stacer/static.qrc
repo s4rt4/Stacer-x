@@ -61,6 +61,34 @@
         <file>static/themes/default/img/sidebar-icons/uninstaller.png</file>
         <file>static/themes/default/style/style.qss</file>
         <file>static/themes/default/style/values.ini</file>
+        <file>static/themes/pc-manager/style/style.qss</file>
+        <file>static/themes/pc-manager/style/values.ini</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/dash.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/dash-active.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/startup.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/startup-active.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/cleaner.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/cleaner-active.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/search.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/search-active.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/services.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/services-active.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/processes.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/processes-active.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/uninstaller.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/uninstaller-active.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/resources.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/resources-active.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/helpers.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/helpers-active.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/ppa-manager.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/ppa-manager-active.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/gnome.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/gnome-active.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/settings.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/settings-active.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/feedback.svg</file>
+        <file>static/themes/pc-manager/img/sidebar-icons/feedback-active.svg</file>
         <file>static/themes/light/img/app.png</file>
         <file>static/themes/light/img/clean-active.png</file>
         <file>static/themes/light/img/clean.png</file>
