@@ -51,7 +51,6 @@ ResourcesController::ResourcesController(QObject *parent) : QObject(parent)
     mHasNvidia = !mNvProg.isEmpty();
 
     for (int i = 0; i < kHistory; ++i) {
-        mCpuHist << 0;
         mMemHist << 0;
         mGpuHist << 0;
         mNvHist << 0;
@@ -120,9 +119,23 @@ void ResourcesController::refresh()
     if (mDiskTick % 5 == 0) {
         mDiskInfo.updateDiskInfo();
         mDisks.clear();
+        QSet<QString> seenDevices;
         for (const Disk *d : mDiskInfo.getDisks()) {
             if (d->size == 0)
                 continue;
+            // Real block devices only — drop tmpfs, /run/credentials, overlay…
+            if (!d->device.startsWith("/dev/"))
+                continue;
+            // …and snap/squashfs loop mounts, which aren't user storage.
+            if (d->fileSystemType == "squashfs" || d->device.startsWith("/dev/loop"))
+                continue;
+            // btrfs subvolumes (Fedora mounts / and /home from the same
+            // /dev/sdaN, each reporting the whole-fs size) would list and
+            // double-count the device — show each physical device once.
+            if (seenDevices.contains(d->device))
+                continue;
+            seenDevices.insert(d->device);
+
             QVariantMap m;
             m["name"] = d->name;
             m["device"] = d->device;

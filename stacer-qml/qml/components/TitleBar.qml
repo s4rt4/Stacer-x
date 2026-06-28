@@ -11,8 +11,13 @@ Rectangle {
     height: 44
     color: Theme.sidebar
 
+    // Drag region — stops short of the window controls so a press on
+    // minimize/close is never swallowed as a window-move on the compositor.
     MouseArea {
-        anchors.fill: parent
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.right: controls.left
         onPressed: bar.win.startSystemMove()
     }
 
@@ -37,6 +42,7 @@ Rectangle {
     }
 
     Row {
+        id: controls
         anchors.right: parent.right
         anchors.rightMargin: 8
         anchors.verticalCenter: parent.verticalCenter

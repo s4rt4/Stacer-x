@@ -2,6 +2,8 @@
 
 #include <algorithm>
 
+#include <QtConcurrent>
+
 #include "Info/system_info.h"
 #include "Utils/command_util.h"
 #include "Utils/format_util.h"
@@ -134,16 +136,20 @@ void ProcessesController::killProcess(int pid)
         }
     }
 
-    try {
-        if (uname == mCurrentUser)
-            CommandUtil::exec("kill", { QString::number(pid) });
-        else
-            CommandUtil::sudoExec("kill", { QString::number(pid) });
-    } catch (const QString &ex) {
-        qCritical() << ex;
-    }
-
-    refresh();
+    // Run off the GUI thread — elevation (pkexec) opens a modal password
+    // prompt and would otherwise freeze the whole window until it's answered.
+    const bool elevate = (uname != mCurrentUser);
+    (void) QtConcurrent::run([this, pid, elevate]() {
+        try {
+            if (elevate)
+                CommandUtil::sudoExec("kill", { QString::number(pid) });
+            else
+                CommandUtil::exec("kill", { QString::number(pid) });
+        } catch (const QString &ex) {
+            qCritical() << ex;
+        }
+        QMetaObject::invokeMethod(this, [this]() { refresh(); }, Qt::QueuedConnection);
+    });
 }
 
 void ProcessesController::setPriority(int pid, int nice)
@@ -160,16 +166,19 @@ void ProcessesController::setPriority(int pid, int nice)
     }
 
     const QStringList args = { "-n", QString::number(nice), "-p", QString::number(pid) };
-    try {
-        // Raising priority (negative nice) or touching another user's process
-        // requires elevation; otherwise the user can renice their own down.
-        if (uname == mCurrentUser && nice >= 0)
-            CommandUtil::exec("renice", args);
-        else
-            CommandUtil::sudoExec("renice", args);
-    } catch (const QString &ex) {
-        qCritical() << ex;
-    }
-
-    refresh();
+    // Raising priority (negative nice) or touching another user's process
+    // requires elevation; otherwise the user can renice their own down.
+    const bool elevate = !(uname == mCurrentUser && nice >= 0);
+    // Off the GUI thread so a pkexec prompt doesn't freeze the window.
+    (void) QtConcurrent::run([this, args, elevate]() {
+        try {
+            if (elevate)
+                CommandUtil::sudoExec("renice", args);
+            else
+                CommandUtil::exec("renice", args);
+        } catch (const QString &ex) {
+            qCritical() << ex;
+        }
+        QMetaObject::invokeMethod(this, [this]() { refresh(); }, Qt::QueuedConnection);
+    });
 }

@@ -134,3 +134,61 @@ sudah ada), selektor pakai `objectName` (`#sidebar`, `#btnDash`), state `:checke
 - Display nyata tersedia (`DISPLAY=:0` + Wayland) untuk uji GUI manual.
 
 **Acceptance Fase 0 terpenuhi:** aplikasi compile & jalan dengan UI asli (belum diubah).
+
+---
+
+## 8. Audit bug bridge backend ↔ QML (2026-06-28)
+
+Inspeksi penuh semua `*Controller` (jembatan C++→QML) vs setiap `qml/pages/*` dan
+`qml/components/*`. Aplikasi `stacer-x` **build bersih (77/77)** dan **start tanpa
+satu pun warning QML** (semua page di-instantiate sekaligus oleh `StackLayout`, jadi
+binding error apa pun akan muncul saat start — tidak ada). Artinya **kontrak properti
+controller↔QML konsisten**: tidak ada properti/Q_INVOKABLE yang dirujuk QML tapi
+tak ada di controller.
+
+### ✅ Sudah diperbaiki
+
+1. **Uninstaller menampilkan NEVRA mentah + fitur "remove leftovers" mati di rpm.**
+   `getRpmPackages()` mengembalikan `rpm -qa` = nama lengkap (`chromium-128.0-1.fc43.x86_64`).
+   Akibatnya: (a) daftar paket jelek; (b) `matchedLeftovers()` membandingkan nama folder
+   (`~/.config/chromium`) dengan string NEVRA → **tidak pernah cocok**, jadi toggle
+   "Also remove user config & cache" diam-diam tak berefek di Fedora/openSUSE.
+   **Fix:** `UninstallerController` query `rpm -qa --qf '%{NAME}\n'` (+ dedupe multi-arch).
+   Nama bersih → daftar enak dibaca **dan** leftover matching berfungsi. `dnf/yum remove`
+   tetap jalan dengan nama polos. (Scoped ke stacer-x, core tidak disentuh.)
+
+2. **`ResourcesController` punya API CPU mati (jebakan).** `cpuPercent/cpuHistory/cores/loadText`
+   ter-ekspose tapi **tak pernah diisi** (CPU sengaja tak di-poll di sini — lihat catatan
+   single-poller). Tidak dipakai QML (chart CPU pakai `system.cpuHistory`), tapi siapa pun
+   yang nanti bind `resmon.cpuHistory` akan dapat nol flat. **Fix:** dihapus + `CpuInfo`
+   yang tak terpakai ikut dibuang.
+
+3. **TitleBar: drag area menimpa tombol window.** `MouseArea { anchors.fill }` + `startSystemMove()`
+   menutupi tombol min/close → klik bisa diartikan window-move oleh compositor. **Fix:**
+   drag area dibatasi `anchors.right: controls.left`.
+
+4. **`killProcess`/`setPriority` membekukan UI saat butuh elevasi.** Keduanya jalan di
+   GUI thread; `pkexec` membuka dialog password modal → window freeze sampai dijawab.
+   Semua aksi elevasi lain sudah `QtConcurrent`. **Fix:** dipindah off-thread + `refresh()`
+   via queued invoke (konsisten dengan pola controller lain).
+
+5. **Disk page: `/dev/sda3` muncul 2× + penuh filesystem semu.** Fedora btrfs me-mount
+   `/` dan `/home` dari `/dev/sda3` yang sama; `QStorageInfo::mountedVolumes()` melaporkan
+   keduanya (ukuran sama → donut salah hitung dobel). Daftar juga penuh `tmpfs`,
+   `/run/credentials/*`. **Fix:** `ResourcesController` kini hanya ambil block device asli
+   (`device` diawali `/dev/`, bukan squashfs/loop) dan **dedupe per device** → tiap partisi
+   fisik tampil sekali. Diverifikasi via `/proc/mounts`: sda3/sda2/sda1 = 3 partisi.
+
+### ⚠️ Diketahui, belum diperbaiki (butuh lingkungan non-Fedora / di luar scope UI)
+
+- **openSUSE (ZYPPER) rusak:** `UninstallerController` memetakan ZYPPER → `dnfRemovePackages`
+  (jalankan `dnf`) dan `autoremoveDeps()` ZYPPER → `dnf autoremove`. `dnf` tak ada di openSUSE.
+  Perlu path `zypper` di `stacer-core/Tools/package_tool` (tak bisa diuji di sini).
+- **NetworkInfo pilih interface sekali di constructor.** Jika app start saat offline atau
+  interface aktif berganti (wifi↔eth), grafik Network mentok 0. (Pre-existing core design.)
+- **`DiskInfo::getDiskIO()` cache nama disk via `static`** → drive yang dicolok setelah app
+  jalan tak terhitung di grafik Disk I/O.
+- **CPU clock kosong** di sistem tanpa baris `cpu MHz` di `/proc/cpuinfo` (FeatureTile
+  jadi `"5%  ·  "`). Kosmetik.
+- **`memory_info` parse `/proc/meminfo` positional** (indeks 0..7 hasil filter) — rapuh jika
+  urutan kernel berbeda. Ini subjek commit fix sebelumnya; biarkan.

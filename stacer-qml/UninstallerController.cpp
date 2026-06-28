@@ -87,6 +87,23 @@ bool autoremoveDeps()
 }
 
 
+// rpm package names WITHOUT the version/arch suffix. PackageTool::getRpmPackages()
+// returns full NEVRA (e.g. "chromium-128.0-1.fc43.x86_64"), which makes for an
+// unreadable list AND breaks leftover matching (folder "chromium" never equals
+// the NEVRA string). Querying %{NAME} gives clean names that both read well and
+// match user config/cache folders. dnf/yum/zypper all remove by bare name fine.
+QStringList rpmPackageNames()
+{
+    QStringList list;
+    try {
+        list = CommandUtil::exec("bash", { "-c", "rpm -qa --qf '%{NAME}\\n' 2> /dev/null" })
+                   .split('\n');
+    } catch (const QString &ex) {
+        qCritical() << ex;
+    }
+    return list;
+}
+
 QStringList listPackages()
 {
     switch (PackageTool::currentPackageTool) {
@@ -96,7 +113,7 @@ QStringList listPackages()
         case PackageTool::DNF:
         case PackageTool::YUM:
         case PackageTool::ZYPPER:
-            return PackageTool::getRpmPackages();
+            return rpmPackageNames();
         case PackageTool::PACMAN:
             return PackageTool::getPacmanPackages();
         default:
@@ -196,6 +213,9 @@ void UninstallerController::reload()
         std::sort(pkgs.begin(), pkgs.end(), [](const QString &a, const QString &b) {
             return a.compare(b, Qt::CaseInsensitive) < 0;
         });
+        // %{NAME} repeats multi-arch packages (e.g. glibc.i686 + glibc.x86_64);
+        // identical names are now adjacent, so collapse them.
+        pkgs.erase(std::unique(pkgs.begin(), pkgs.end()), pkgs.end());
         QMetaObject::invokeMethod(
             this, [this, pkgs]() { setPackages(pkgs); }, Qt::QueuedConnection);
     });
