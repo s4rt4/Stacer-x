@@ -17,10 +17,18 @@ endif()
 
 set(PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 
+# Build the legacy Qt Widgets UI (`stacer`) alongside the QML app (default: ON).
+# Turn OFF to build/package only the Qt Quick front-end `stacer-x`.
+option(BUILD_LEGACY_STACER "Build the legacy Qt Widgets UI (stacer)" ON)
+
 # Activating MOC and searching for the Qt dependencies
 set(CMAKE_AUTOMOC ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets Charts Svg Concurrent Network REQUIRED)
+if(BUILD_LEGACY_STACER)
+  find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets Charts Svg Concurrent Network REQUIRED)
+else()
+  find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Concurrent Network REQUIRED)
+endif()
 
 # Setting the minimum C++ standard and passing the Qt-specific define
 set(CMAKE_CXX_STANDARD 17)
@@ -30,31 +38,37 @@ add_definitions(-DQT_DEPRECATED_WARNINGS)
 
 # Subprojects
 add_subdirectory(stacer-core)
-add_subdirectory(stacer)
+if(BUILD_LEGACY_STACER)
+  add_subdirectory(stacer)
+endif()
 add_subdirectory(stacer-qml)
 
 string(TIMESTAMP TODAY_ISO_8601 "%Y-%m-%d" UTC)
 
-configure_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/desktop/stacer.metainfo.xml.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/desktop/fr.quentium.stacer.metainfo.xml"
-  IMMEDIATE @ONLY
-)
+# Legacy `stacer` desktop integration (metainfo / .desktop / icon theme).
+# The QML app installs its own stacer-x.desktop + icon from stacer-qml/.
+if(BUILD_LEGACY_STACER)
+  configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/desktop/stacer.metainfo.xml.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/desktop/fr.quentium.stacer.metainfo.xml"
+    IMMEDIATE @ONLY
+  )
 
-install(
-  FILES "${CMAKE_CURRENT_BINARY_DIR}/desktop/fr.quentium.stacer.metainfo.xml"
-  DESTINATION share/metainfo
-)
+  install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/desktop/fr.quentium.stacer.metainfo.xml"
+    DESTINATION share/metainfo
+  )
 
-install(
-  FILES "${CMAKE_CURRENT_SOURCE_DIR}/desktop/stacer.desktop"
-  DESTINATION share/applications
-)
+  install(
+    FILES "${CMAKE_CURRENT_SOURCE_DIR}/desktop/stacer.desktop"
+    DESTINATION share/applications
+  )
 
-install(
-  DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/icons/hicolor"
-  DESTINATION share/icons
-)
+  install(
+    DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/icons/hicolor"
+    DESTINATION share/icons
+  )
+endif()
 
 # For Flathub, Stacer is named Acters
 option(FLATHUB_BUILD "Install the app as Acters for Flathub" OFF)

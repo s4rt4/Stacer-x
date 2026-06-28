@@ -88,3 +88,17 @@ install(
   TARGETS stacer-x
   RUNTIME DESTINATION bin
 )
+
+# Desktop integration — menu entry + themed icon. The .desktop basename and the
+# icon name both match QGuiApplication::setDesktopFileName("stacer-x") in main.cpp,
+# so the launcher/dock shows the brand logo.
+install(
+  FILES "${PROJECT_ROOT}/desktop/stacer-x.desktop"
+  DESTINATION share/applications
+)
+
+install(
+  FILES "${PROJECT_ROOT}/stacer-logo.svg"
+  DESTINATION share/icons/hicolor/scalable/apps
+  RENAME stacer-x.svg
+)

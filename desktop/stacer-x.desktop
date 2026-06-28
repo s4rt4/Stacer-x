@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Stacer-X
+GenericName=Linux System Optimizer and Monitoring
+Comment=Optimize and monitor your Linux system (PC Manager-style UI)
+Icon=stacer-x
+Hidden=false
+Exec=stacer-x
+Terminal=false
+Categories=Utility;System;Monitor
+Keywords=monitor;system;optimizer;cleaner;process;service;

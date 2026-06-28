@@ -2,6 +2,7 @@
 .idea/
 
 build/
+build-*/
 release/
 translations/*.qm
 
