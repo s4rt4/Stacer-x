@@ -22,7 +22,7 @@ Item {
             Layout.fillWidth: true
             spacing: 12
             Text {
-                text: "Processes"
+                text: qsTr("Processes")
                 color: Theme.text
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fsTitle
@@ -30,14 +30,14 @@ Item {
             }
             Item { Layout.fillWidth: true }
             Text {
-                text: processes.count + " running"
+                text: processes.count + qsTr(" running")
                 color: Theme.textDim
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fsBody
             }
             SearchField {
                 Layout.preferredWidth: 200
-                placeholder: "Search processes"
+                placeholder: qsTr("Search processes")
                 onTextChanged: processes.filter = text
             }
         }
@@ -61,7 +61,7 @@ Item {
                     Layout.topMargin: 4
                     spacing: 12
                     Text {
-                        text: "Process"; color: Theme.textDim
+                        text: qsTr("Process"); color: Theme.textDim
                         font.family: Theme.fontFamily; font.pixelSize: Theme.fsSmall
                         Layout.fillWidth: true
                     }
@@ -71,12 +71,12 @@ Item {
                         horizontalAlignment: Text.AlignRight; Layout.preferredWidth: 56
                     }
                     Text {
-                        text: "Memory"; color: Theme.textDim
+                        text: qsTr("Memory"); color: Theme.textDim
                         font.family: Theme.fontFamily; font.pixelSize: Theme.fsSmall
                         horizontalAlignment: Text.AlignRight; Layout.preferredWidth: 84
                     }
                     Text {
-                        text: "Priority"; color: Theme.textDim
+                        text: qsTr("Priority"); color: Theme.textDim
                         font.family: Theme.fontFamily; font.pixelSize: Theme.fsSmall
                         horizontalAlignment: Text.AlignHCenter; Layout.preferredWidth: 44
                     }
@@ -172,9 +172,9 @@ Item {
                                 TapHandler { onTapped: prioMenu.popup() }
                                 Menu {
                                     id: prioMenu
-                                    MenuItem { text: "High priority (−5)"; onTriggered: processes.setPriority(row.pid, -5) }
-                                    MenuItem { text: "Normal (0)";         onTriggered: processes.setPriority(row.pid, 0) }
-                                    MenuItem { text: "Low priority (+10)"; onTriggered: processes.setPriority(row.pid, 10) }
+                                    MenuItem { text: qsTr("High priority (−5)"); onTriggered: processes.setPriority(row.pid, -5) }
+                                    MenuItem { text: qsTr("Normal (0)");         onTriggered: processes.setPriority(row.pid, 0) }
+                                    MenuItem { text: qsTr("Low priority (+10)"); onTriggered: processes.setPriority(row.pid, 10) }
                                 }
                             }
 

@@ -51,7 +51,7 @@ Item {
         RowLayout {
             Layout.fillWidth: true
             Text {
-                text: "Hosts"
+                text: qsTr("Hosts")
                 color: Theme.text
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fsTitle
@@ -60,7 +60,7 @@ Item {
             Item { Layout.fillWidth: true }
             BusyIndicator { running: hosts.busy; visible: hosts.busy; implicitWidth: 20; implicitHeight: 20 }
             Text {
-                text: hosts.count + " entries"
+                text: hosts.count + qsTr(" entries")
                 color: Theme.textDim
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fsBody
@@ -78,12 +78,12 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 8
 
-                Field { id: ipField;   Layout.preferredWidth: 140; placeholder: "IP address" }
-                Field { id: hostField; Layout.fillWidth: true;      placeholder: "Hostname" }
+                Field { id: ipField;   Layout.preferredWidth: 140; placeholder: qsTr("IP address") }
+                Field { id: hostField; Layout.fillWidth: true;      placeholder: qsTr("Hostname") }
                 AccentButton {
-                    text: "Add"
+                    text: qsTr("Add")
                     busy: hosts.busy
-                    busyText: "Saving…"
+                    busyText: qsTr("Saving…")
                     onClicked: {
                         hosts.addEntry(ipField.text, hostField.text)
                         ipField.text = ""

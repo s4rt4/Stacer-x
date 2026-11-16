@@ -17,19 +17,24 @@ ApplicationWindow {
     color: Theme.bg
     flags: Qt.Window | Qt.FramelessWindowHint
 
+    onClosing: function(close) {
+        if (!tray.quitting && settings.closeToTray && tray.hideWindow())
+            close.accepted = false
+    }
+
     // Nav definition — order mirrors mockup-stacer.html.
     readonly property var navModel: [
-        { icon: "house",                  label: "Dashboard" },
-        { icon: "eraser",                 label: "Cleaner" },
-        { icon: "server",                 label: "Services" },
-        { icon: "list",                   label: "Processes" },
-        { icon: "power",                  label: "Startup" },
-        { icon: "package",                label: "Uninstaller" },
-        { icon: "wrench",                 label: "Hosts" },
-        { icon: "chart-no-axes-combined", label: "Resources" },
-        { icon: "hard-drive",             label: "Disk" },
-        { icon: "settings",               label: "Settings", bottom: true },
-        { icon: "info",                   label: "About",    bottom: true }
+        { icon: "house",                  label: qsTr("Dashboard") },
+        { icon: "eraser",                 label: qsTr("Cleaner") },
+        { icon: "server",                 label: qsTr("Services") },
+        { icon: "list",                   label: qsTr("Processes") },
+        { icon: "power",                  label: qsTr("Startup") },
+        { icon: "package",                label: qsTr("Uninstaller") },
+        { icon: "wrench",                 label: qsTr("Hosts") },
+        { icon: "chart-no-axes-combined", label: qsTr("Resources") },
+        { icon: "hard-drive",             label: qsTr("Disk") },
+        { icon: "settings",               label: qsTr("Settings"), bottom: true },
+        { icon: "info",                   label: qsTr("About"),    bottom: true }
     ]
     property int currentIndex: 0
 

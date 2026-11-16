@@ -63,7 +63,7 @@ Item {
                 Layout.fillWidth: true
                 Layout.preferredHeight: page.chartHeight
                 iconSource: Theme.icon("memory-stick")
-                title: "Memory"
+                title: qsTr("Memory")
                 value: resmon.memText
                 values: resmon.memHistory
                 maxValue: 100
@@ -74,7 +74,7 @@ Item {
                 Layout.fillWidth: true
                 Layout.preferredHeight: page.chartHeight
                 iconSource: Theme.icon("hard-drive")
-                title: "Disk"
+                title: qsTr("Disk")
                 value: resmon.diskText
                 values: resmon.diskHistory
                 maxValue: 0
@@ -85,7 +85,7 @@ Item {
                 Layout.fillWidth: true
                 Layout.preferredHeight: page.chartHeight
                 iconSource: Theme.icon("activity")
-                title: "Network"
+                title: qsTr("Network")
                 value: "↓ " + resmon.downText + "    ↑ " + resmon.upText
                 values: resmon.downHistory
                 maxValue: 0

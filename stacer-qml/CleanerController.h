@@ -38,6 +38,7 @@ class CleanerController : public QAbstractListModel
 
     // Off-thread listing of what a category would remove → detailsReady.
     Q_INVOKABLE void requestDetails(const QString &key);
+    void retranslate();
 
   signals:
     void busyChanged();

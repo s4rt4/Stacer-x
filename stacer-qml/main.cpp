@@ -1,8 +1,10 @@
-#include <QGuiApplication>
+#include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickStyle>
 #include <QIcon>
+#include <QTranslator>
+#include <QWindow>
 
 #include "SystemController.h"
 #include "ProcessesController.h"
@@ -13,11 +15,12 @@
 #include "SettingsController.h"
 #include "UninstallerController.h"
 #include "HostsController.h"
+#include "TrayController.h"
 
 int main(int argc, char *argv[])
 {
     qputenv("QT_ENABLE_HIGHDPI_SCALING", QByteArray("1"));
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     // Fully custom look — keep the controls neutral so our styling wins.
     QQuickStyle::setStyle("Basic");
@@ -39,6 +42,7 @@ int main(int argc, char *argv[])
     CleanerController cleanerController;
     ResourcesController resourcesController;
     SettingsController settingsController;
+    TrayController trayController;
     UninstallerController uninstallerController;
     HostsController hostsController;
 
@@ -53,6 +57,21 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("settings", &settingsController);
     engine.rootContext()->setContextProperty("uninstaller", &uninstallerController);
     engine.rootContext()->setContextProperty("hosts", &hostsController);
+    engine.rootContext()->setContextProperty("tray", &trayController);
+
+    QTranslator chineseTranslator;
+    auto applyLanguage = [&]() {
+        app.removeTranslator(&chineseTranslator);
+        if (settingsController.language() == QLatin1String("zh_CN")
+            && chineseTranslator.load(QStringLiteral(":/i18n/stacer-x_zh_CN.qm")))
+            app.installTranslator(&chineseTranslator);
+        engine.retranslate();
+        cleanerController.retranslate();
+        trayController.retranslate();
+    };
+    QObject::connect(&settingsController, &SettingsController::languageChanged,
+                     &app, applyLanguage);
+    applyLanguage();
 
     QObject::connect(
         &engine, &QQmlApplicationEngine::objectCreationFailed, &app,
@@ -62,6 +81,8 @@ int main(int argc, char *argv[])
 
     if (engine.rootObjects().isEmpty())
         return -1;
+
+    trayController.setWindow(qobject_cast<QWindow *>(engine.rootObjects().first()));
 
     return app.exec();
 }

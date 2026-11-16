@@ -27,7 +27,7 @@ Item {
 
         Text {
             Layout.alignment: Qt.AlignHCenter
-            text: "Linux system optimizer · version 1.7.0"
+            text: qsTr("Linux system optimizer · version 1.7.0")
             color: Theme.textDim
             font.family: Theme.fontFamily
             font.pixelSize: Theme.fsBody
@@ -47,12 +47,12 @@ Item {
 
                 Repeater {
                     model: [
-                        { k: "Host",      v: system.hostname },
-                        { k: "OS",        v: system.distribution },
-                        { k: "Kernel",    v: system.kernel },
-                        { k: "Processor", v: system.cpuModel },
-                        { k: "Cores",     v: system.cpuCore },
-                        { k: "Uptime",    v: system.uptimeText }
+                        { k: qsTr("Host"),      v: system.hostname },
+                        { k: qsTr("OS"),        v: system.distribution },
+                        { k: qsTr("Kernel"),    v: system.kernel },
+                        { k: qsTr("Processor"), v: system.cpuModel },
+                        { k: qsTr("Cores"),     v: system.cpuCore },
+                        { k: qsTr("Uptime"),    v: system.uptimeText }
                     ]
                     delegate: RowLayout {
                         required property var modelData
@@ -91,7 +91,7 @@ Item {
                 spacing: 6
 
                 Text {
-                    text: "Reborn with a Qt Quick interface, styled after Microsoft PC Manager."
+                    text: qsTr("Reborn with a Qt Quick interface, styled after Microsoft PC Manager.")
                     color: Theme.textDim
                     font.family: Theme.fontFamily
                     font.pixelSize: Theme.fsBody
@@ -99,7 +99,7 @@ Item {
                     Layout.fillWidth: true
                 }
                 Text {
-                    text: "Original by oguzhaninan · Qt6 fork by QuentiumYT · GPL licensed."
+                    text: qsTr("Original by oguzhaninan · Qt6 fork by QuentiumYT · GPL licensed.")
                     color: Theme.textDim
                     font.family: Theme.fontFamily
                     font.pixelSize: Theme.fsSmall

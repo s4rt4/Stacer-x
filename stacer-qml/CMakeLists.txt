@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 
 # QML frontend (PC Manager style). Built as a separate executable `stacer-x`
 # alongside the legacy Widgets `stacer`, reusing stacer-core as-is.
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick QuickControls2 Concurrent Network)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick QuickControls2 Concurrent Network Widgets LinguistTools)
 
 qt_standard_project_setup(REQUIRES 6.5)
 
@@ -26,6 +26,8 @@ qt_add_executable(stacer-x
   UninstallerController.h
   HostsController.cpp
   HostsController.h
+  TrayController.cpp
+  TrayController.h
 )
 
 # Theme is a QML singleton (must be declared before qt_add_qml_module).
@@ -81,8 +83,17 @@ target_include_directories(stacer-x PRIVATE "${PROJECT_ROOT}/stacer-core")
 
 target_link_libraries(stacer-x PRIVATE
   stacer-core
-  Qt6::Core Qt6::Gui Qt6::Qml Qt6::Quick Qt6::QuickControls2 Qt6::Concurrent Qt6::Network
+  Qt6::Core Qt6::Gui Qt6::Qml Qt6::Quick Qt6::QuickControls2 Qt6::Concurrent Qt6::Network Qt6::Widgets
 )
+
+# Keep the translation catalog inside the executable.
+set(STACER_ZH_QM "${CMAKE_CURRENT_BINARY_DIR}/stacer-x_zh_CN.qm")
+add_custom_command(OUTPUT "${STACER_ZH_QM}"
+  COMMAND Qt6::lrelease "${CMAKE_CURRENT_SOURCE_DIR}/translations/stacer-x_zh_CN.ts" -qm "${STACER_ZH_QM}"
+  DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/translations/stacer-x_zh_CN.ts"
+  VERBATIM)
+qt_add_resources(stacer-x translations PREFIX /i18n
+  BASE "${CMAKE_CURRENT_BINARY_DIR}" FILES "${STACER_ZH_QM}")
 
 install(
   TARGETS stacer-x

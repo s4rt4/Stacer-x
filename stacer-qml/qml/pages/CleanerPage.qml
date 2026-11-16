@@ -20,7 +20,7 @@ Item {
         RowLayout {
             Layout.fillWidth: true
             Text {
-                text: "System cleaner"
+                text: qsTr("System cleaner")
                 color: Theme.text
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fsTitle
@@ -33,7 +33,7 @@ Item {
                 implicitWidth: 20; implicitHeight: 20
             }
             Text {
-                text: cleaner.busy ? "Working…" : "Rescan"
+                text: cleaner.busy ? qsTr("Working…") : qsTr("Rescan")
                 color: cleaner.busy ? Theme.textDim : Theme.accentSoft
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fsBody
@@ -131,7 +131,7 @@ Item {
                                     spacing: 4
                                     Text {
                                         anchors.verticalCenter: parent.verticalCenter
-                                        text: catRoot.expanded ? "Hide" : "Details"
+                                        text: catRoot.expanded ? qsTr("Hide") : qsTr("Details")
                                         color: detailHover.hovered ? Theme.accentSoft : Theme.textDim
                                         font.family: Theme.fontFamily
                                         font.pixelSize: Theme.fsSmall
@@ -180,7 +180,7 @@ Item {
                                 anchors.top: parent.top
                                 anchors.topMargin: 6
                                 visible: catRoot.detailLoading || catRoot.detailItems.length === 0
-                                text: catRoot.detailLoading ? "Scanning…" : "Nothing to remove"
+                                text: catRoot.detailLoading ? qsTr("Scanning…") : qsTr("Nothing to remove")
                                 color: Theme.textDim
                                 font.family: Theme.fontFamily
                                 font.pixelSize: Theme.fsSmall
@@ -230,9 +230,9 @@ Item {
         // ---- Clean action ----
         AccentButton {
             Layout.fillWidth: true
-            text: "Clean  •  " + cleaner.totalSelectedText
+            text: qsTr("Clean  •  ") + cleaner.totalSelectedText
             busy: cleaner.busy
-            busyText: "Cleaning…"
+            busyText: qsTr("Cleaning…")
             onClicked: cleaner.clean()
         }
 

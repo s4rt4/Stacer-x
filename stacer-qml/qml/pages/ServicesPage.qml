@@ -21,7 +21,7 @@ Item {
             Layout.fillWidth: true
             spacing: 12
             Text {
-                text: "Services"
+                text: qsTr("Services")
                 color: Theme.text
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fsTitle
@@ -29,14 +29,14 @@ Item {
             }
             Item { Layout.fillWidth: true }
             Text {
-                text: services.loading ? "Scanning…" : services.count + " services"
+                text: services.loading ? qsTr("Scanning…") : services.count + qsTr(" services")
                 color: Theme.textDim
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fsBody
             }
             SearchField {
                 Layout.preferredWidth: 200
-                placeholder: "Search services"
+                placeholder: qsTr("Search services")
                 onTextChanged: services.filter = text
             }
         }
@@ -54,7 +54,7 @@ Item {
                 visible: services.loading && services.count === 0
                 BusyIndicator { anchors.horizontalCenter: parent.horizontalCenter; running: parent.visible }
                 Text {
-                    text: "Scanning services…"
+                    text: qsTr("Scanning services…")
                     color: Theme.textDim
                     font.family: Theme.fontFamily
                     font.pixelSize: Theme.fsBody
@@ -75,17 +75,17 @@ Item {
                     Layout.topMargin: 4
                     spacing: 12
                     Text {
-                        text: "Service"; color: Theme.textDim
+                        text: qsTr("Service"); color: Theme.textDim
                         font.family: Theme.fontFamily; font.pixelSize: Theme.fsSmall
                         Layout.fillWidth: true
                     }
                     Text {
-                        text: "Startup"; color: Theme.textDim
+                        text: qsTr("Startup"); color: Theme.textDim
                         font.family: Theme.fontFamily; font.pixelSize: Theme.fsSmall
                         horizontalAlignment: Text.AlignHCenter; Layout.preferredWidth: 60
                     }
                     Text {
-                        text: "Running"; color: Theme.textDim
+                        text: qsTr("Running"); color: Theme.textDim
                         font.family: Theme.fontFamily; font.pixelSize: Theme.fsSmall
                         horizontalAlignment: Text.AlignHCenter; Layout.preferredWidth: 60
                     }

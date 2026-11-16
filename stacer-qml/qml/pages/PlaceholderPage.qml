@@ -34,7 +34,7 @@ Item {
             }
             Text {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "Coming soon to the new interface"
+                text: qsTr("Coming soon to the new interface")
                 color: Theme.textDim
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fsBody

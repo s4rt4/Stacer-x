@@ -35,7 +35,7 @@ Item {
             Layout.fillWidth: true
             spacing: 12
             Text {
-                text: "Uninstaller"
+                text: qsTr("Uninstaller")
                 color: Theme.text
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fsTitle
@@ -43,7 +43,7 @@ Item {
             }
             Item { Layout.fillWidth: true }
             Text {
-                text: "Autoremove unused deps"
+                text: qsTr("Autoremove unused deps")
                 color: autoHover.hovered && !uninstaller.busy ? Theme.accentSoft : Theme.textDim
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fsBody
@@ -52,15 +52,15 @@ Item {
             }
             Rectangle { width: 1; height: 16; color: Theme.border }
             Text {
-                text: uninstaller.busy ? "Working…"
-                                       : (uninstaller.count + " of " + uninstaller.total + " · " + uninstaller.manager)
+                text: uninstaller.busy ? qsTr("Working…")
+                                       : (uninstaller.count + qsTr(" of ") + uninstaller.total + " · " + uninstaller.manager)
                 color: Theme.textDim
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fsBody
             }
             SearchField {
                 Layout.preferredWidth: 200
-                placeholder: "Search packages"
+                placeholder: qsTr("Search packages")
                 onTextChanged: uninstaller.filter = text
             }
         }
@@ -77,7 +77,7 @@ Item {
                 visible: uninstaller.busy && uninstaller.count === 0
                 BusyIndicator { anchors.horizontalCenter: parent.horizontalCenter; running: parent.visible }
                 Text {
-                    text: "Loading packages…"
+                    text: qsTr("Loading packages…")
                     color: Theme.textDim
                     font.family: Theme.fontFamily
                     font.pixelSize: Theme.fsBody
@@ -156,8 +156,8 @@ Item {
 
                 Text {
                     text: page.leftovers.length > 0
-                          ? "Will also remove " + page.leftovers.length + " config/cache folder(s):"
-                          : "No matching config/cache folders found"
+                          ? qsTr("Will also remove ") + page.leftovers.length + qsTr(" config/cache folder(s):")
+                          : qsTr("No matching config/cache folders found")
                     color: Theme.textDim
                     font.family: Theme.fontFamily
                     font.pixelSize: Theme.fsSmall
@@ -196,7 +196,7 @@ Item {
                 onToggled: (v) => { uninstaller.removeConfig = v; page.refreshLeftovers() }
             }
             Text {
-                text: "Also remove user config & cache"
+                text: qsTr("Also remove user config & cache")
                 color: Theme.text
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fsBody
@@ -204,7 +204,7 @@ Item {
             Item { Layout.fillWidth: true }
             Text {
                 visible: uninstaller.selectedCount > 0
-                text: uninstaller.selectedCount + " selected · clear"
+                text: uninstaller.selectedCount + qsTr(" selected · clear")
                 color: clearHover.hovered ? Theme.accentSoft : Theme.textDim
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fsBody
@@ -212,9 +212,9 @@ Item {
                 TapHandler { onTapped: uninstaller.clearSelection() }
             }
             AccentButton {
-                text: "Uninstall" + (uninstaller.selectedCount > 0 ? "  (" + uninstaller.selectedCount + ")" : "")
+                text: qsTr("Uninstall") + (uninstaller.selectedCount > 0 ? "  (" + uninstaller.selectedCount + ")" : "")
                 busy: uninstaller.busy
-                busyText: "Uninstalling…"
+                busyText: qsTr("Uninstalling…")
                 opacity: uninstaller.selectedCount > 0 ? 1 : 0.5
                 onClicked: if (uninstaller.selectedCount > 0) uninstaller.removeSelected()
             }

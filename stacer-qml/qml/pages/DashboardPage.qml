@@ -16,8 +16,8 @@ Item {
         target: system
         function onBoostFinished() {
             page.boostMsg = system.lastBoostFreedBytes > 0
-                ? "Freed " + system.lastBoostFreedText + " of memory · usage now " + system.memPercent + "%"
-                : "Already optimized · memory usage " + system.memPercent + "%"
+                ? qsTr("Freed ") + system.lastBoostFreedText + qsTr(" of memory · usage now ") + system.memPercent + "%"
+                : qsTr("Already optimized · memory usage ") + system.memPercent + "%"
             boostMsgTimer.restart()
         }
     }
@@ -49,16 +49,16 @@ Item {
                      : state === 1 ? Theme.danger
                      : Theme.good
 
-            title: state === 0 ? "Memory is filling up"
-                 : state === 1 ? "Disk is almost full"
-                 : "Your system is healthy"
+            title: state === 0 ? qsTr("Memory is filling up")
+                 : state === 1 ? qsTr("Disk is almost full")
+                 : qsTr("Your system is healthy")
 
-            subtitle: state === 0 ? "RAM is at " + system.memPercent + "% — free it to speed things up."
-                    : state === 1 ? "Root disk is " + system.rootPercent + "% full — clear some space."
-                    : "RAM " + system.memPercent + "% · Disk " + system.rootPercent + "% · up " + system.uptimeText
+            subtitle: state === 0 ? qsTr("RAM is at ") + system.memPercent + qsTr("% — free it to speed things up.")
+                    : state === 1 ? qsTr("Root disk is ") + system.rootPercent + qsTr("% full — clear some space.")
+                    : qsTr("RAM ") + system.memPercent + qsTr("% · Disk ") + system.rootPercent + qsTr("% · up ") + system.uptimeText
 
-            linkText: state === 0 ? "Free memory now ›"
-                    : state === 1 ? "Open Cleaner ›"
+            linkText: state === 0 ? qsTr("Free memory now ›")
+                    : state === 1 ? qsTr("Open Cleaner ›")
                     : ""
 
             onLinkActivated: {
@@ -91,7 +91,7 @@ Item {
                         }
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
-                            text: "System boost"
+                            text: qsTr("System boost")
                             color: Theme.text
                             font.family: Theme.fontFamily
                             font.pixelSize: Theme.fsTitle
@@ -100,7 +100,7 @@ Item {
                     }
                     Item { Layout.fillWidth: true }
                     Text {
-                        text: "Smart boost"
+                        text: qsTr("Smart boost")
                         color: Theme.accentSoft
                         font.family: Theme.fontFamily
                         font.pixelSize: 12
@@ -108,7 +108,7 @@ Item {
                 }
 
                 Text {
-                    text: "Up " + system.uptimeText + "  ·  free up your system resources"
+                    text: qsTr("Up ") + system.uptimeText + qsTr("  ·  free up your system resources")
                     color: Theme.textDim
                     font.family: Theme.fontFamily
                     font.pixelSize: 12
@@ -121,11 +121,11 @@ Item {
                     spacing: 32
                     BoostMetric {
                         value: system.memPercent + "%"
-                        label: "Memory usage"
+                        label: qsTr("Memory usage")
                     }
                     BoostMetric {
                         value: system.rootUsedText
-                        label: "Disk used (/)"
+                        label: qsTr("Disk used (/)")
                     }
                     Item { Layout.fillWidth: true }
                 }
@@ -133,9 +133,9 @@ Item {
                 AccentButton {
                     Layout.topMargin: 14
                     Layout.fillWidth: true
-                    text: "Boost"
+                    text: qsTr("Boost")
                     busy: system.boosting
-                    busyText: "Boosting…"
+                    busyText: qsTr("Boosting…")
                     onClicked: system.boost()
                 }
 
@@ -189,31 +189,31 @@ Item {
             FeatureTile {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 92
-                name: "Processor"
+                name: qsTr("Processor")
                 iconSource: Theme.icon("cpu")
-                label: "Usage · clock"
+                label: qsTr("Usage · clock")
                 value: system.cpuPercent + "%  ·  " + system.cpuClockText
             }
             FeatureTile {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 92
-                name: "Memory"
+                name: qsTr("Memory")
                 iconSource: Theme.icon("memory-stick")
-                label: "In use"
+                label: qsTr("In use")
                 value: system.memUsedText + " / " + system.memTotalText
             }
             FeatureTile {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 92
-                name: "Deep cleanup"
+                name: qsTr("Deep cleanup")
                 iconSource: Theme.icon("eraser")
-                label: "Root (/)"
+                label: qsTr("Root (/)")
                 value: system.rootUsedText + " / " + system.rootTotalText
             }
             FeatureTile {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 92
-                name: "System"
+                name: qsTr("System")
                 iconSource: Theme.icon("laptop")
                 label: system.distribution
                 value: system.hostname + "  ·  " + system.kernel
@@ -237,7 +237,7 @@ Item {
                     spacing: 8
                     IconImage { source: Theme.icon("microchip"); size: 17; color: Theme.accent; anchors.verticalCenter: parent.verticalCenter }
                     Text {
-                        text: "CPU cores"
+                        text: qsTr("CPU cores")
                         color: Theme.text
                         font.family: Theme.fontFamily
                         font.pixelSize: Theme.fsTitle
@@ -245,7 +245,7 @@ Item {
                     }
                     Item { Layout.fillWidth: true }
                     Text {
-                        text: "load  " + system.loadText
+                        text: qsTr("load  ") + system.loadText
                         color: Theme.textDim
                         font.family: Theme.fontFamily
                         font.pixelSize: Theme.fsBody

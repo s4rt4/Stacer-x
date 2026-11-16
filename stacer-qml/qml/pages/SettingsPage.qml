@@ -19,11 +19,49 @@ Item {
         spacing: Theme.gap
 
         Text {
-            text: "Settings"
+            text: qsTr("Settings")
             color: Theme.text
             font.family: Theme.fontFamily
             font.pixelSize: Theme.fsTitle
             font.weight: Theme.weightMedium
+        }
+
+        // Language names remain readable in both locales.
+        Card {
+            Layout.fillWidth: true
+            implicitHeight: languageRow.implicitHeight + padding * 2
+
+            RowLayout {
+                id: languageRow
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
+                spacing: 12
+
+                Column {
+                    Layout.fillWidth: true
+                    spacing: 1
+                    Text {
+                        text: qsTr("Language")
+                        color: Theme.text
+                        font.family: Theme.fontFamily
+                        font.pixelSize: Theme.fsBody
+                        font.weight: Theme.weightMedium
+                    }
+                    Text {
+                        text: qsTr("Choose the display language")
+                        color: Theme.textDim
+                        font.family: Theme.fontFamily
+                        font.pixelSize: Theme.fsSmall
+                    }
+                }
+                ComboBox {
+                    objectName: "languageSelector"
+                    model: ["简体中文", "English"]
+                    currentIndex: settings.language === "zh_CN" ? 0 : 1
+                    onActivated: (index) => settings.language = index === 0 ? "zh_CN" : "en"
+                }
+            }
         }
 
         // ---- General ----
@@ -55,14 +93,14 @@ Item {
                         Layout.fillWidth: true
                         spacing: 1
                         Text {
-                            text: "Start Stacer on login"
+                            text: qsTr("Start Stacer on login")
                             color: Theme.text
                             font.family: Theme.fontFamily
                             font.pixelSize: Theme.fsBody
                             font.weight: Theme.weightMedium
                         }
                         Text {
-                            text: "Launch automatically when you sign in"
+                            text: qsTr("Launch automatically when you sign in")
                             color: Theme.textDim
                             font.family: Theme.fontFamily
                             font.pixelSize: Theme.fsSmall
@@ -73,6 +111,40 @@ Item {
                         checked: settings.startOnLogin
                         onToggled: (v) => settings.startOnLogin = v
                     }
+                }
+            }
+        }
+
+        Card {
+            Layout.fillWidth: true
+            implicitHeight: trayRow.implicitHeight + padding * 2
+
+            RowLayout {
+                id: trayRow
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
+                spacing: 12
+                Column {
+                    Layout.fillWidth: true
+                    spacing: 1
+                    Text {
+                        text: qsTr("Close to system tray")
+                        color: Theme.text
+                        font.family: Theme.fontFamily
+                        font.pixelSize: Theme.fsBody
+                        font.weight: Theme.weightMedium
+                    }
+                    Text {
+                        text: qsTr("Keep running when the window is closed")
+                        color: Theme.textDim
+                        font.family: Theme.fontFamily
+                        font.pixelSize: Theme.fsSmall
+                    }
+                }
+                Toggle {
+                    checked: settings.closeToTray
+                    onToggled: (v) => settings.closeToTray = v
                 }
             }
         }
@@ -104,14 +176,14 @@ Item {
                         Layout.fillWidth: true
                         spacing: 1
                         Text {
-                            text: "Resource alerts"
+                            text: qsTr("Resource alerts")
                             color: Theme.text
                             font.family: Theme.fontFamily
                             font.pixelSize: Theme.fsBody
                             font.weight: Theme.weightMedium
                         }
                         Text {
-                            text: "Notify when usage crosses a limit"
+                            text: qsTr("Notify when usage crosses a limit")
                             color: Theme.textDim
                             font.family: Theme.fontFamily
                             font.pixelSize: Theme.fsSmall
@@ -126,9 +198,9 @@ Item {
                 // thresholds
                 Repeater {
                     model: [
-                        { label: "CPU usage",    key: "cpu" },
-                        { label: "Memory usage", key: "mem" },
-                        { label: "Disk usage",   key: "disk" }
+                        { label: qsTr("CPU usage"),    key: "cpu" },
+                        { label: qsTr("Memory usage"), key: "mem" },
+                        { label: qsTr("Disk usage"),   key: "disk" }
                     ]
                     delegate: RowLayout {
                         required property var modelData
@@ -175,14 +247,14 @@ Item {
                         Layout.fillWidth: true
                         spacing: 1
                         Text {
-                            text: "Theme"
+                            text: qsTr("Theme")
                             color: Theme.text
                             font.family: Theme.fontFamily
                             font.pixelSize: Theme.fsBody
                             font.weight: Theme.weightMedium
                         }
                         Text {
-                            text: "PC Manager · dark"
+                            text: qsTr("PC Manager · dark")
                             color: Theme.textDim
                             font.family: Theme.fontFamily
                             font.pixelSize: Theme.fsSmall
@@ -196,7 +268,7 @@ Item {
                     spacing: 12
                     Text {
                         Layout.fillWidth: true
-                        text: "Accent color"
+                        text: qsTr("Accent color")
                         color: Theme.text
                         font.family: Theme.fontFamily
                         font.pixelSize: Theme.fsBody
@@ -229,7 +301,7 @@ Item {
                 spacing: 2
 
                 Text {
-                    text: "Configuration"
+                    text: qsTr("Configuration")
                     color: Theme.text
                     font.family: Theme.fontFamily
                     font.pixelSize: Theme.fsBody

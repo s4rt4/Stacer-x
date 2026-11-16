@@ -4,6 +4,8 @@
 
 <h1 align="center">Stacer-X</h1>
 
+<p align="center"><a href="README.zh-CN.md">简体中文</a> · English</p>
+
 <h3 align="center">A modern, Fluent-style reimagining of the Stacer Linux optimizer</h3>
 
 <p align="center">
@@ -41,14 +43,20 @@ branding.
   memory, disk I/O and network throughput.
 - **Disk** — per-partition usage as a donut chart with a legend.
 - **Settings** — resource-usage alerts (CPU / memory / disk thresholds, persisted), start on
-  login, accent colour.
+  login, accent colour, and a persistent English / Simplified Chinese language selector.
+- **System tray** — closing the window keeps the monitor running in the tray by default.
+  Click the tray icon or use **Show Stacer-X** to restore it; use **Quit** to exit. The
+  behaviour can be disabled under **Settings → Close to system tray**. If the desktop has
+  no system tray available, closing the window exits normally.
 - Frameless fixed-size window, custom logo, and desktop launcher / dock integration.
 
 ## Build from Source
 
 ### Prerequisites
 
-Qt 6 with the Quick / QML modules, plus CMake and Ninja.
+Qt 6.5 or later with the Quick / QML, Widgets and Linguist Tools modules, plus CMake and
+Ninja. The Chinese catalog is compiled into the application during the build. Ubuntu 22.04's
+standard Qt 6 packages are older than the required version; use a suitable newer Qt SDK.
 
 **Fedora:**
 ```bash
@@ -61,7 +69,7 @@ sudo dnf install cmake ninja-build gcc-c++ \
 ```bash
 sudo apt update
 sudo apt install cmake ninja-build g++ \
-  qt6-base-dev qt6-declarative-dev qt6-declarative-private-dev \
+  qt6-base-dev qt6-declarative-dev qt6-declarative-private-dev qt6-tools-dev-tools \
   libqt6core5compat6-dev libqt6svg6-dev qml6-module-* 
 ```
 
@@ -76,6 +84,18 @@ cmake --build build --target stacer-x -j $(nproc)
 Privileged actions (System Boost, cleaning system paths, editing `/etc/hosts`, removing
 packages) are elevated through **polkit** (`pkexec`) at the moment they run — Stacer-X itself
 runs as your normal user.
+
+### Language and background monitoring
+
+Under **Settings → Language**, choose **English** or **简体中文**. The change takes effect
+immediately and is remembered for future launches. The initial choice follows the system
+locale. Application names, service names and operating-system details remain as reported by
+the system.
+
+When **Close to system tray** is enabled, the window can be closed while resource monitoring
+and configured alerts continue. Use the tray menu to quit completely. On GNOME, a supported
+system tray / AppIndicator extension is needed; if unavailable, the close button exits instead
+of hiding an inaccessible window.
 
 ## Project layout
 

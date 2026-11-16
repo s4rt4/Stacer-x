@@ -3,6 +3,7 @@
 #include <utility>
 
 #include <QDir>
+#include <QCoreApplication>
 #include <QDirIterator>
 #include <QFile>
 #include <QFileInfoList>
@@ -103,11 +104,11 @@ QFileInfoList filesFor(const QString &key)
 CleanerController::CleanerController(QObject *parent) : QAbstractListModel(parent)
 {
     mCats = {
-        { "cache",   "Application caches", "database-zap", false, true,  0 },
-        { "trash",   "Trash",              "trash-2",      false, true,  0 },
-        { "package", "Package cache",      "package",      true,  false, 0 },
-        { "logs",    "Application logs",   "notebook-pen", true,  false, 0 },
-        { "crash",   "Crash reports",      "octagon-x",    true,  false, 0 },
+        { "cache",   QT_TRANSLATE_NOOP("CleanerController", "Application caches"), "database-zap", false, true,  0 },
+        { "trash",   QT_TRANSLATE_NOOP("CleanerController", "Trash"),              "trash-2",      false, true,  0 },
+        { "package", QT_TRANSLATE_NOOP("CleanerController", "Package cache"),      "package",      true,  false, 0 },
+        { "logs",    QT_TRANSLATE_NOOP("CleanerController", "Application logs"),   "notebook-pen", true,  false, 0 },
+        { "crash",   QT_TRANSLATE_NOOP("CleanerController", "Crash reports"),      "octagon-x",    true,  false, 0 },
     };
 }
 
@@ -126,12 +127,18 @@ QVariant CleanerController::data(const QModelIndex &index, int role) const
     const Category &c = mCats.at(index.row());
     switch (role) {
         case KeyRole:      return c.key;
-        case LabelRole:    return c.label;
+        case LabelRole:    return QCoreApplication::translate("CleanerController", c.label.toUtf8().constData());
         case IconRole:     return c.icon;
         case SizeTextRole: return mScanned ? FormatUtil::formatBytes(c.sizeBytes) : QStringLiteral("—");
         case SelectedRole: return c.selected;
     }
     return QVariant();
+}
+
+void CleanerController::retranslate()
+{
+    if (!mCats.isEmpty())
+        emit dataChanged(index(0), index(mCats.size() - 1), { LabelRole });
 }
 
 QHash<int, QByteArray> CleanerController::roleNames() const

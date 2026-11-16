@@ -83,7 +83,7 @@ void SystemController::checkAlerts()
     if (mCpuAlert > 0) {
         if (cpu >= mCpuAlert && !mCpuAlerting) {
             mCpuAlerting = true;
-            notify("High CPU usage", QString("CPU usage is at %1% (limit %2%).").arg(cpu).arg(mCpuAlert));
+            notify(tr("High CPU usage"), tr("CPU usage is at %1% (limit %2%).").arg(cpu).arg(mCpuAlert));
         } else if (cpu < mCpuAlert) {
             mCpuAlerting = false;
         }
@@ -91,7 +91,7 @@ void SystemController::checkAlerts()
     if (mMemAlert > 0) {
         if (mem >= mMemAlert && !mMemAlerting) {
             mMemAlerting = true;
-            notify("High memory usage", QString("Memory usage is at %1% (limit %2%).").arg(mem).arg(mMemAlert));
+            notify(tr("High memory usage"), tr("Memory usage is at %1% (limit %2%).").arg(mem).arg(mMemAlert));
         } else if (mem < mMemAlert) {
             mMemAlerting = false;
         }
@@ -99,7 +99,7 @@ void SystemController::checkAlerts()
     if (mDiskAlert > 0) {
         if (disk >= mDiskAlert && !mDiskAlerting) {
             mDiskAlerting = true;
-            notify("Low disk space", QString("Root disk usage is at %1% (limit %2%).").arg(disk).arg(mDiskAlert));
+            notify(tr("Low disk space"), tr("Root disk usage is at %1% (limit %2%).").arg(disk).arg(mDiskAlert));
         } else if (disk < mDiskAlert) {
             mDiskAlerting = false;
         }

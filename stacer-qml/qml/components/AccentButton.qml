@@ -8,7 +8,7 @@ Rectangle {
 
     property string text: ""
     property bool busy: false
-    property string busyText: "Working…"
+    property string busyText: qsTr("Working…")
     signal clicked
 
     implicitHeight: 40

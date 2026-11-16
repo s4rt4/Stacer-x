@@ -20,7 +20,7 @@ Item {
         RowLayout {
             Layout.fillWidth: true
             Text {
-                text: "Startup applications"
+                text: qsTr("Startup applications")
                 color: Theme.text
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fsTitle
@@ -28,7 +28,7 @@ Item {
             }
             Item { Layout.fillWidth: true }
             Text {
-                text: startup.count + " apps"
+                text: startup.count + qsTr(" apps")
                 color: Theme.textDim
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fsBody
@@ -51,7 +51,7 @@ Item {
                     source: Theme.icon("power"); size: 30; color: Theme.textDim
                 }
                 Text {
-                    text: "No startup applications"
+                    text: qsTr("No startup applications")
                     color: Theme.textDim
                     font.family: Theme.fontFamily
                     font.pixelSize: Theme.fsBody

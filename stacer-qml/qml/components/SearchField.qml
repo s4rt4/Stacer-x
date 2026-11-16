@@ -6,7 +6,7 @@ Rectangle {
     id: root
 
     property alias text: input.text
-    property string placeholder: "Search"
+    property string placeholder: qsTr("Search")
 
     implicitWidth: 200
     implicitHeight: 32

@@ -44,7 +44,7 @@ Row {
         anchors.verticalCenter: parent.verticalCenter
         width: 44
         horizontalAlignment: Text.AlignHCenter
-        text: root.value <= 0 ? "Off" : (root.value + root.suffix)
+        text: root.value <= 0 ? qsTr("Off") : (root.value + root.suffix)
         color: root.enabled ? Theme.text : Theme.textDim
         font.family: Theme.fontFamily
         font.pixelSize: Theme.fsBody

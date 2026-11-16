@@ -35,7 +35,7 @@ Item {
             spacing: Theme.gap
 
             Text {
-                text: "Disk"
+                text: qsTr("Disk")
                 color: Theme.text
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fsTitle
@@ -74,7 +74,7 @@ Item {
                             }
                             Text {
                                 anchors.horizontalCenter: parent.horizontalCenter
-                                text: resmon.disks.length === 1 ? "partition" : "partitions"
+                                text: resmon.disks.length === 1 ? qsTr("partition") : qsTr("partitions")
                                 color: Theme.textDim
                                 font.family: Theme.fontFamily
                                 font.pixelSize: Theme.fsSmall
